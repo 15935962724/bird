@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+ <meta charset="utf-8"/>
+ <title>酒店预订</title>
+ <meta name="author" content="DeathGhost" />
+ <link rel="stylesheet" type="text/css"  th:href="@{/css/style.css}">
+ <!--[if lt IE 9]>
+ <script th:src="@{/js/html5.js}"></script>
+ <![endif]-->
+ <script th:src="@{/js/jquery.js}"></script>
+ <script th:src="@{/js/jquery.mCustomScrollbar.concat.min.js}"></script>
+
+</head>
+<body>
+<!--header-->
+<!--头部-->
+<div th:replace="~{admin/incloud/top::content}"></div>
+<!--aside nav-->
+<!--aside nav-->
+<!--左侧-->
+<div th:replace="~{admin/incloud/left::content}"></div>
+
+
+<section class="rt_wrap content mCustomScrollbar">
+ <div class="rt_content">
+          <div class="page_title">
+           <h2 class="fl">会议注册须知</h2>
+           <a th:href="@{/admin/registerPolicy/list}" class="fr top_rt_btn">返回</a>
+          </div>
+            <section>
+                <form method="post" th:action="@{/admin/hotelReserve/update}" enctype="multipart/form-data" >
+                    <ul class="ulColumn2">
+                        <li>
+                            <span class="item_name" style="width:120px;">会议主题：</span>
+                            <input type="text" class="textbox textbox_295" disabled th:value="${meeting.title}"/>
+                            <input type="hidden" name="meetingId" th:value="${hotelReserve.meetingId}">
+                        </li>
+                        <li>
+                            <span class="item_name" style="width:120px;">注册须知：</span>
+                            <textarea id="editor" rows="20" cols="160" name="content"
+                                      th:utext="${hotelReserve.content}"></textarea>
+                        </li>
+                        <li>
+                            <span class="item_name" style="width:120px;"></span>
+                            <input type="submit" value="提交" class="link_btn"/>
+                        </li>
+                    </ul>
+                </form>
+          </section>
+ </div>
+</section>
+<script th:src="@{/ueditor/ueditor.config.js}"></script>
+<script th:src="@{/ueditor/ueditor.all.js}"></script>
+<script th:src="@{/ueditor/lang/zh-cn/zh-cn.js}"></script>
+     <script type="text/javascript">
+
+      //实例化编辑器
+      //建议使用工厂方法getEditor创建和引用编辑器实例，如果在某个闭包下引用该编辑器，直接调用UE.getEditor('editor')就能拿到相关的实例
+      var ue = UE.getEditor('editor',{initialFrameWidth:'80%',initialFrameHeight:180});
+      $("#editor").css("margin-left","120px");
+
+     </script>
+</body>
+</html>

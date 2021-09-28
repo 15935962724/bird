@@ -1,0 +1,66 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <title>职务管理</title>
+    <meta name="author" content="DeathGhost" />
+    <link rel="shortcut icon"  th:href="@{/images/favicon.ico}" >
+    <link rel="stylesheet" type="text/css"  th:href="@{/css/style.css}">
+    <!--[if lt IE 9]>
+    <script th:src="@{/js/html5.js}"></script>
+    <![endif]-->
+    <script th:src="@{js/jquery.js}"></script>
+    <script th:src="@{js/jquery.mCustomScrollbar.concat.min.js}"></script>
+    <script th:src="@{js/load-content.js}"></script>
+    <script th:src="@{js/list.js}"></script>
+</head>
+<body>
+<!--header-->
+<div th:replace="~{admin/incloud/top::content}"></div>
+<!--aside nav-->
+<!--aside nav-->
+<div th:replace="~{admin/incloud/left::content}"></div>
+
+<section class="rt_wrap content mCustomScrollbar">
+    <div class="rt_content">
+        <div class="page_title">
+            <h2 class="fl">会员职务列表示例</h2>
+            <a th:href="@{/admin/memberMeetingPosition/add}" class="fr top_rt_btn add_icon">添加会员职务</a>
+        </div>
+        <form id="list" th:action="@{/admin/memberMeetingPosition/list}">
+            <input type="hidden" name="pageNum" id="pageNum"  th:value="${page.pageNum}" >
+            <input type="hidden" name="pageSize" id="pageSize" th:value="${page.pageSize}">
+            <section class="mtb">
+                &nbsp;&nbsp;&nbsp;&nbsp;标题：<input type="text" class="textbox textbox_225" name="title" th:value="${title}" placeholder="请输入会议标题..."/>
+                &nbsp;&nbsp;&nbsp;&nbsp;会员：<input type="text" class="textbox textbox_225" name="name" th:value="${name}" placeholder="请输入会员姓名..."/>
+                &nbsp;&nbsp;&nbsp;&nbsp;职务：<input type="text" class="textbox textbox_225" name="position" th:value="${position}" placeholder="请输入职务..."/>
+                <input type="submit" value="查询" class="group_btn"/>
+            </section>
+            <table class="table">
+                <tr>
+                    <th>会议标题</th>
+                    <th>会员</th>
+                    <th>职务</th>
+                    <th>操作</th>
+                </tr>
+                <tr th:each="memberMeetingPosition:${page.list}">
+                    <td class="center">[[${memberMeetingPosition.title}]]</td>
+                    <td class="center">[[${memberMeetingPosition.name}]]</td>
+                    <td class="center">[[${memberMeetingPosition.position}]]</td>
+                    <td class="center">
+                        <a th:href="@{/admin/memberMeetingPosition/delete(id=${memberMeetingPosition.id})}" title="删除" class="link_icon">&#101;</a>
+                    </td>
+                </tr>
+            </table>
+        </form>
+        <th:block th:if="${page.pages>1}">
+            <aside class="paging">
+                <a>第一页</a>
+                <a th:each="i:${#numbers.sequence(1,page.pages)}" th:onclick="'javascript:pageSkip(\''+${i}+'\');'" >[[${i}]]</a>
+                <a>最后一页</a>
+            </aside>
+        </th:block>
+    </div>
+</section>
+</body>
+</html>

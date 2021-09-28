@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <title></title>
+    <meta name="author" content="DeathGhost" />
+    <link rel="stylesheet" type="text/css"  th:href="@{/css/fullcalendar.min.css}">
+    <link rel="stylesheet" type="text/css"  th:href="@{/css/app.min.css}">
+    <![endif]-->
+</head>
+<body>
+
+<div id="calendar"></div>
+<!-- Add New Event MODAL -->
+<div class="modal fade" id="event-modal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header pr-4 pl-4 border-bottom-0 d-block">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">新日程</h4>
+            </div>
+            <div class="modal-body pt-3 pr-4 pl-4">
+            </div>
+            <div class="text-right pb-4 pr-4">
+                <button type="button" class="btn btn-light " data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-success save-event  ">创建</button>
+                <button type="button" class="btn btn-danger delete-event  " data-dismiss="modal">删除</button>
+            </div>
+        </div> <!-- end modal-content-->
+    </div> <!-- end modal dialog-->
+</div>
+<!-- end modal-->
+</body>
+</html>
+<script th:src="@{/js/app.min.js}"></script>
+<script th:src="@{/js/fullcalendar.min.js}"></script>
+<script th:src="@{/js/demo.calendar.js}"></script>

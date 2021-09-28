@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+ <meta charset="utf-8"/>
+ <title>职务管理</title>
+ <meta name="author" content="DeathGhost" />
+ <link rel="shortcut icon"  th:href="@{/images/favicon.ico}" >
+ <link rel="stylesheet" type="text/css"  th:href="@{/css/style.css}">
+ <!--[if lt IE 9]>
+ <script th:src="@{/js/html5.js}"></script>
+ <![endif]-->
+ <script th:src="@{/js/jquery.js}"></script>
+ <script th:src="@{/js/jquery.mCustomScrollbar.concat.min.js}"></script>
+ <script th:src="@{/js/load-content.js}"></script>
+ <script th:src="@{/js/lSelect.js}"></script>
+</head>
+<body>
+<!--header-->
+<!--头部-->
+<div th:replace="~{admin/incloud/top::content}"></div>
+<!--aside nav-->
+<!--aside nav-->
+<!--左侧-->
+<div th:replace="~{admin/incloud/left::content}"></div>
+
+<section class="rt_wrap content mCustomScrollbar">
+ <div class="rt_content">
+      <div class="page_title">
+       <h2 class="fl">会员详情</h2>
+      </div>
+     <form th:action="@{/admin/memberMeetingPosition/save}" method="post" enctype="multipart/form-data">
+      <ul class="ulColumn2">
+       <li>
+        <span class="item_name" style="width:120px;">会议：</span>
+        <select class="select" name="meetingId">
+         <option>--请选择--</option>
+         <option th:each="metting:${mettings}" th:value="${metting.id}" th:text="${metting.title}"></option>
+        </select>
+       </li>
+       <li>
+        <span class="item_name" style="width:120px;">会员：</span>
+        <select class="select" name="memberId">
+         <option>--请选择--</option>
+         <option th:each="member:${members}" th:value="${member.id}" th:text="${member.name}"></option>
+        </select>
+       </li>
+       <li>
+        <span class="item_name" style="width:120px;">职务：</span>
+        <textarea placeholder="请输入本次会议职务信息" class="textarea" name="position" style="height:50px;width:640px;"></textarea>
+       </li>
+       <li>
+        <span class="item_name" style="width:120px;">演讲主题：</span>
+        <textarea placeholder="请输入本次会议演讲主题" class="textarea" name="topic" style="height:50px;width:640px;"></textarea>
+       </li>
+       <li>
+        <span class="item_name" style="width:120px;"></span>
+        <input type="submit" class="link_btn" value="保存"/>
+       </li>
+      </ul>
+     </form>
+
+ </div>
+</section>
+</body>
+</html>

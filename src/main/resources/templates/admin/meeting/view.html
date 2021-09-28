@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+ <meta charset="utf-8"/>
+ <title>预览</title>
+ <meta name="author" content="DeathGhost" />
+ <link rel="stylesheet" type="text/css"  th:href="@{/css/style.css}">
+ <!--[if lt IE 9]>
+ <script th:src="@{/js/html5.js}"></script>
+ <![endif]-->
+ <script th:src="@{/js/jquery.js}"></script>
+ <script th:src="@{/js/jquery.mCustomScrollbar.concat.min.js}"></script>
+ <script th:src="@{/js/load-content.js}"></script>
+</head>
+<body>
+<!--header-->
+<!--头部-->
+<div th:replace="~{admin/incloud/top::content}"></div>
+<!--aside nav-->
+<!--aside nav-->
+<!--左侧-->
+<div th:replace="~{admin/incloud/left::content}"></div>
+
+<section class="rt_wrap content mCustomScrollbar">
+ <div class="rt_content">
+      <div class="page_title">
+       <h2 class="fl">会员详情</h2>
+      </div>
+     <form th:action="@{/admin/member/save}" method="post" enctype="multipart/form-data">
+      <ul class="ulColumn2">
+       <li style="display: flex;justify-content: flex-start;align-items: center;">
+        <span class="item_name" style="width:120px;">上传头像：</span>
+        <div style="display: flex;justify-content: flex-start;align-items: flex-start;">
+         <img style="height: 84px;margin-left: 5px" id="img" src="" />
+         <label class="uploadImg" style="margin-left: 5px">
+          <input type="file" name="member_logo" accept="image/*" onchange="fileImg(this)" />
+          <span>上传头像</span>
+         </label>
+        </div>
+       </li>
+       <li>
+        <span class="item_name" style="width:120px;">会员姓名：</span>
+        <input type="text" class="textbox textbox_225" name="name" placeholder="会员姓名..." required />
+       </li>
+       <li>
+        <span class="item_name" style="width:120px;">职务：</span>
+        <textarea placeholder="多个职务请用逗号隔开" class="textarea" name="position" style="height:50px;width:640px;"></textarea>
+       </li>
+
+       <li>
+        <span class="item_name" style="width:120px;">电子邮箱：</span>
+        <input type="email" class="textbox textbox_225" name="email" placeholder="电子邮件地址..."/>
+       </li>
+       <li>
+        <span class="item_name" style="width:120px;">手机号码：</span>
+        <input type="tel" class="textbox textbox_225" name="phone" placeholder="手机号码..." required/>
+        <span class="errorTips">错误提示信息...</span>
+       </li>
+       <li>
+        <span class="item_name" style="width:120px;">收货地址：</span>
+        <select class="select">
+         <option>选择省份</option>
+         <option>陕西省</option>
+         <option>山西省</option>
+        </select>
+        <select class="select">
+         <option>选择城市</option>
+         <option>西安市</option>
+         <option>大同市</option>
+        </select>
+        <select class="select">
+         <option>选择区/县</option>
+         <option>长安县</option>
+         <option>不晓得</option>
+        </select>
+       </li>
+       <li>
+        <span class="item_name" style="width:120px;">详细地址：</span>
+        <input type="text" class="textbox textbox_295" name="address" placeholder="详细地址..." />
+       </li>
+       <li>
+        <span class="item_name" style="width:120px;"></span>
+        <input type="submit" class="link_btn" value="保存"/>
+       </li>
+      </ul>
+     </form>
+
+ </div>
+</section>
+</body>
+</html>
+<script>
+ function fileImg(_this) {
+  console.log(_this.files[0]);
+  //实例化FileReader API
+  var freader = new FileReader();
+  freader.readAsDataURL(_this.files[0]);
+  freader.onload = function(e) {
+   $("#img").attr("src",e.target.result);
+  }
+ }
+</script>

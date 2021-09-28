@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro" >
+top
+  <head>
+    <title>头部</title>
+  </head>
+  <body>
+    <header th:fragment="content">
+      <h1><img th:src="@{/images/admin_logo.png}"/></h1>
+      <ul class="rt_nav">
+        <li><a href="http://www.aspku.com" target="_blank" class="website_icon">站点首页</a></li>
+        <li><a href="#" class="clear_icon">清除缓存</a></li>
+        <li><a href="#" class="admin_icon">DeathGhost</a></li>
+        <li><a href="#" class="set_icon">账号设置</a></li>
+        <li><a href="login.html" class="quit_icon">安全退出</a></li>
+      </ul>
+    </header>
+
+  </body>
+</html>

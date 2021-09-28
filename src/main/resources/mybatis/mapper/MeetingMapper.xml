@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bird.dao.MeetingMapper" >
+  <resultMap id="BaseResultMap" type="com.bird.entity.Meeting" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="logo" property="logo" jdbcType="VARCHAR" />
+    <result column="hold_date" property="holdDate" jdbcType="TIMESTAMP" />
+    <result column="hold_address" property="holdAddress" jdbcType="VARCHAR" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.bird.entity.Meeting" extends="BaseResultMap" >
+    <result column="welcome_speech" property="welcomeSpeech" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, create_date, title, logo, hold_date, hold_address, remarks
+  </sql>
+  <sql id="Blob_Column_List" >
+    welcome_speech
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from bird_meeting
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="getMeetings" resultType="java.util.Map">
+    select
+    <include refid="Base_Column_List" />
+    from bird_meeting
+    where 1 = 1
+    <if test="title!=null and title !=''">
+      and title like '%${title}%'
+    </if>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from bird_meeting
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.bird.entity.Meeting" >
+    insert into bird_meeting (id, create_date, title,
+      logo, hold_date, hold_address,
+      remarks, welcome_speech)
+    values (#{id,jdbcType=BIGINT}, #{createDate,jdbcType=TIMESTAMP}, #{title,jdbcType=VARCHAR},
+      #{logo,jdbcType=VARCHAR}, #{holdDate,jdbcType=TIMESTAMP}, #{holdAddress,jdbcType=VARCHAR},
+      #{remarks,jdbcType=VARCHAR}, #{welcomeSpeech,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.bird.entity.Meeting" useGeneratedKeys="true" keyProperty="id">
+    insert into bird_meeting
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="logo != null" >
+        logo,
+      </if>
+      <if test="holdDate != null" >
+        hold_date,
+      </if>
+      <if test="holdAddress != null" >
+        hold_address,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="welcomeSpeech != null" >
+        welcome_speech,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="logo != null" >
+        #{logo,jdbcType=VARCHAR},
+      </if>
+      <if test="holdDate != null" >
+        #{holdDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="holdAddress != null" >
+        #{holdAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="welcomeSpeech != null" >
+        #{welcomeSpeech,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bird.entity.Meeting" >
+    update bird_meeting
+    <set >
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="logo != null" >
+        logo = #{logo,jdbcType=VARCHAR},
+      </if>
+      <if test="holdDate != null" >
+        hold_date = #{holdDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="holdAddress != null" >
+        hold_address = #{holdAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="welcomeSpeech != null" >
+        welcome_speech = #{welcomeSpeech,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.bird.entity.Meeting" >
+    update bird_meeting
+    set create_date = #{createDate,jdbcType=TIMESTAMP},
+      title = #{title,jdbcType=VARCHAR},
+      logo = #{logo,jdbcType=VARCHAR},
+      hold_date = #{holdDate,jdbcType=TIMESTAMP},
+      hold_address = #{holdAddress,jdbcType=VARCHAR},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      welcome_speech = #{welcomeSpeech,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bird.entity.Meeting" >
+    update bird_meeting
+    set create_date = #{createDate,jdbcType=TIMESTAMP},
+      title = #{title,jdbcType=VARCHAR},
+      logo = #{logo,jdbcType=VARCHAR},
+      hold_date = #{holdDate,jdbcType=TIMESTAMP},
+      hold_address = #{holdAddress,jdbcType=VARCHAR},
+      remarks = #{remarks,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

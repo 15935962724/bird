@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bird.dao.NoticeMapper" >
+  <resultMap id="BaseResultMap" type="com.bird.entity.Notice" >
+    <id column="meeting_id" property="meetingId" jdbcType="BIGINT" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.bird.entity.Notice" extends="BaseResultMap" >
+    <result column="content" property="content" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    meeting_id
+  </sql>
+  <sql id="Blob_Column_List" >
+    content
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from bird_notice
+    where meeting_id = #{meetingId,jdbcType=BIGINT}
+  </select>
+  <select id="getNoticeList" resultType="java.util.Map">
+    SELECT M.*,N.* FROM bird_meeting M LEFT JOIN bird_notice N ON M.id = N.`meeting_id`
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from bird_notice
+    where meeting_id = #{meetingId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.bird.entity.Notice" >
+    insert into bird_notice (meeting_id, content)
+    values (#{meetingId,jdbcType=BIGINT}, #{content,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.bird.entity.Notice" >
+    insert into bird_notice
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="meetingId != null" >
+        meeting_id,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="meetingId != null" >
+        #{meetingId,jdbcType=BIGINT},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bird.entity.Notice" >
+    update bird_notice
+    <set >
+      <if test="content != null" >
+        content = #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where meeting_id = #{meetingId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.bird.entity.Notice" >
+    update bird_notice
+    set content = #{content,jdbcType=LONGVARCHAR}
+    where meeting_id = #{meetingId,jdbcType=BIGINT}
+  </update>
+</mapper>

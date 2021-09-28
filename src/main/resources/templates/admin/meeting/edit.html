@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+ <meta charset="utf-8"/>
+ <title>会议管理</title>
+ <meta name="author" content="DeathGhost" />
+ <link rel="stylesheet" type="text/css"  th:href="@{/css/style.css}">
+ <!--[if lt IE 9]>
+ <script th:src="@{/js/html5.js}"></script>
+ <![endif]-->
+ <script th:src="@{/js/jquery.js}"></script>
+ <script th:src="@{/js/jquery.mCustomScrollbar.concat.min.js}"></script>
+ <script th:src="@{/js/load-content.js}"></script>
+ <script th:src="@{/js/lSelect.js}"></script>
+ <script th:src="@{/laydate/laydate.js}"></script>
+ <style>
+  .deleteItem{
+   position: relative;
+  }
+  .deleteItem span{
+   position: absolute;
+   right: 5px;
+   top: 2px;
+   color: #fff;
+   font-size: 28px;
+   cursor: pointer;
+   z-index: 5;
+  }
+ </style>
+
+</head>
+<body>
+<!--header-->
+<!--头部-->
+<div th:replace="~{admin/incloud/top::content}"></div>
+<!--aside nav-->
+<!--aside nav-->
+<!--左侧-->
+<div th:replace="~{admin/incloud/left::content}"></div>
+
+<section class="rt_wrap content mCustomScrollbar">
+ <div class="rt_content">
+  <div class="page_title">
+   <h2 class="fl">添加会议</h2>
+  </div>
+  <form th:action="@{/admin/meeting/update}" method="post" enctype="multipart/form-data">
+   <input type="hidden" id="id" name="id" th:value="${meeting.id}">
+   <ul class="ulColumn2">
+    <li style="display: flex;justify-content: flex-start;align-items: center;">
+     <span class="item_name" style="width:120px;">上传背景图：</span>
+     <div id="imgList" style="display: flex;justify-content: flex-start;align-items: flex-start;">
+
+      <div class="deleteItem" th:each="logo:${meeting.logo.split(',')}">
+       <img class="imgOdd" style="height: 84px;margin-left: 5px" th:src="@{${logo}}">
+      </div>
+      <label class="uploadImg" style="margin-left: 5px">
+       <input type="file" name="meeting_logo" accept="image/*" onchange="fileImg(this)" />
+       <span>上传会议背景图</span>
+      </label>
+     </div>
+    </li>
+    <li>
+     <span class="item_name" style="width:120px;">会议标题：</span>
+     <input type="text" class="textbox textbox_225" name="title" th:value="${meeting.title}" placeholder="会议标题..." required />
+    </li>
+    <li>
+     <span class="item_name" style="width:120px;">举行时间：</span>
+     <input type="date" class="textbox textbox_225" name="hold_date" th:value="${ #dates.format(meeting.holdDate,'yyyy-MM-dd')}" placeholder="举行时间..." required />
+    </li>
+    <li>
+     <span class="item_name" style="width:120px;">举行地点：</span>
+     <input type="text" class="textbox textbox_225" name="holdAddress" th:value="${meeting.holdAddress}" placeholder="举行地点..." required />
+    </li>
+    <li>
+     <span class="item_name" style="width:120px;">欢迎词：</span>
+     <textarea id="editor" rows="20" cols="160" name="welcomeSpeech" th:utext="${meeting.welcomeSpeech}"></textarea>
+    </li>
+    <li>
+     <span class="item_name" style="width:120px;">描述：</span>
+     <textarea placeholder="描述" class="textarea" name="remarks" th:text="${meeting.remarks}" style="height:50px;width:640px;"></textarea>
+    </li>
+    <li>
+     <span class="item_name" style="width:120px;"></span>
+     <input type="submit" class="link_btn" value="保存"/>
+    </li>
+   </ul>
+  </form>
+
+ </div>
+</section>
+
+</body>
+</html>
+<script th:src="@{/laydate/dateUtil.js}"></script>
+
+
+<script th:src="@{/ueditor/ueditor.config.js}"></script>
+<script th:src="@{/ueditor/ueditor.all.js}"></script>
+<script th:src="@{/ueditor/lang/zh-cn/zh-cn.js}"></script>
+<script>
+
+ //实例化编辑器
+ //建议使用工厂方法getEditor创建和引用编辑器实例，如果在某个闭包下引用该编辑器，直接调用UE.getEditor('editor')就能拿到相关的实例
+ var ue = UE.getEditor('editor',{initialFrameWidth:'80%',initialFrameHeight:180});
+ $("#editor").css("margin-left","120px");
+
+ var width,height,imgArray=[];//背景图宽高
+
+ /**
+  * 图片回显
+  * @param _this
+  */
+ function fileImg(_this){
+  console.log(_this.files[0]);
+  if(imgArray.length == 3){
+   alert('最多只能添加3张图片');
+   return;
+  }
+  var file, img;
+  var _URL = window.URL || window.webkitURL;
+  if ((file = _this.files[0])) {
+   img = new Image();
+   img.src = _URL.createObjectURL(file);
+   img.onload = function () {
+    width = this.width;
+    height = this.height;
+    console.log("width:" + width + ",height" + height + "filesize" + file.size)
+    if (width!=750||height!=400){
+     _this.value='';
+     alert("背景图宽必须是750px,高必须是400px");
+     return;
+    }
+    //实例化FileReader API
+    var freader = new FileReader();
+    freader.readAsDataURL(_this.files[0]);
+    freader.onload = function(e) {
+     imgArray.push(e.target.result);
+     forImgList();
+     $("#imgList .uploadImg").hide();
+     if(imgArray.length != 3){
+      $("#imgList").append('<label class="uploadImg" style="margin-left: 5px"><input type="file" name="meeting_logo" accept="image/*" onchange="fileImg(this)" /><span>上传会议背景图</span></label>')
+     }
+
+    };
+   };
+  }
+
+ }
+ function forImgList(){
+  $("#imgList").find(".imgOdd").remove();
+  var html = '';
+  for(var i = 0; i< imgArray.length; i++){
+   html += '<div class="deleteItem"><span onclick="deleteImg('+i+')">×</span><img class="imgOdd" style="height: 84px;margin-left: 5px" src="'+imgArray[i]+'" /></div>'
+  }
+  $("#imgList").prepend(html);
+ }
+
+
+ function deleteImg(index) {
+  console.log(imgArray);
+  if(imgArray.length == 3){
+   $("#imgList").append('<label class="uploadImg" style="margin-left: 5px"><input type="file" name="meeting_logo" accept="image/*" onchange="fileImg(this)" /><span>上传会议背景图</span></label>')
+  }
+  $(".deleteItem").eq(index).remove();
+  $(".uploadImg").eq(index).remove();
+  imgArray.splice(index,1);
+  console.log(imgArray);
+ }
+</script>

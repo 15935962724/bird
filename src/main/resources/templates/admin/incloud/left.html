@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>左侧</title>
+  </head>
+  <body>
+
+  <aside class="lt_aside_nav content mCustomScrollbar" th:fragment="content">
+   <h2><a href="index.html">起始页</a></h2>
+    <ul>
+      <li>
+        <dl>
+          <dt>会议信息</dt>
+          <!--当前链接则添加class:active-->
+          <dd><a th:href="@{/admin/meeting/list}" class="active">会议管理</a></dd>
+          <dd><a th:href="@{/admin/member/list}">主席</a></dd>
+          <dd><a th:href="@{/admin/memberMeetingPosition/list}">职位安排</a></dd>
+          <dd><a th:href="@{/admin/registerPolicy/list}">注册须知</a></dd>
+          <dd><a th:href="@{/admin/notice/list}">会议通知</a></dd>
+          <dd><a th:href="@{/admin/hotelReserve/list}">酒店预订</a></dd>
+          <dd><a th:href="@{/admin/organizational/list}">组织架构</a></dd>
+          <dd><a th:href="@{/admin/attract/list}">会议招商</a></dd>
+          <dd><a th:href="@{/admin/traffic/list}">会议交通</a></dd>
+          <dd><a th:href="@{/admin/epidemic/list}">疫情自查</a></dd>
+          <dd><a th:href="@{/admin/contacUs/list}">联系我们</a></dd>
+        </dl>
+      </li>
+      <li>
+        <dl>
+          <dt>基础设置</dt>
+          <dd><a href="setting.html">站点基础设置示例</a></dd>
+        </dl>
+      </li>
+      <li>
+        <dl>
+          <dt>在线统计</dt>
+          <dd><a href="discharge_statistic.html">流量统计</a></dd>
+          <dd><a href="sales_volume.html">销售额统计</a></dd>
+        </dl>
+      </li>
+      <li>
+        <p class="btm_infor">© 版权所有2020</p>
+      </li>
+    </ul>
+  </aside>
+
+
+  </body>
+</html>

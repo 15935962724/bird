@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bird.dao.MemberMeetingPositionMapper" >
+  <resultMap id="BaseResultMap" type="com.bird.entity.MemberMeetingPosition" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="meeting_id" property="meetingId" jdbcType="BIGINT" />
+    <result column="member_id" property="memberId" jdbcType="BIGINT" />
+    <result column="position" property="position" jdbcType="VARCHAR" />
+    <result column="topic" property="topic" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, meeting_id, member_id, position, topic
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from bird_member_meeting_position
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <select id="getMemberMeetingPositions" resultType="java.util.Map" parameterType="java.util.Map">
+    SELECT MMP.id, M.`name`,M.`logo`,M.`position` mposition, MT.`title`,MMP.`position`  FROM bird_member_meeting_position MMP LEFT JOIN bird_member M ON MMP.`member_id` = M.`id`
+    LEFT JOIN bird_meeting MT ON MMP.`meeting_id` = MT.`id` WHERE 1 = 1
+    <if test="name!=null and name !=''">
+      and M.name like '%${name}%'
+    </if>
+    <if test="title!=null and title !=''">
+      and MT.title like '%${title}%'
+    </if>
+    <if test="position!=null and position !=''">
+      and MMP.position like '%${position}%'
+    </if>
+    <if test="meetingId!=null">
+      and MMP.meeting_id = #{meetingId}
+    </if>
+    <if test="topic!=null">
+      and MMP.topic is not null
+    </if>
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from bird_member_meeting_position
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.bird.entity.MemberMeetingPosition" >
+    insert into bird_member_meeting_position (id, meeting_id, member_id,
+      position, topic)
+    values (#{id,jdbcType=BIGINT}, #{meetingId,jdbcType=BIGINT}, #{memberId,jdbcType=BIGINT},
+      #{position,jdbcType=VARCHAR}, #{topic,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.bird.entity.MemberMeetingPosition" >
+    insert into bird_member_meeting_position
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="meetingId != null" >
+        meeting_id,
+      </if>
+      <if test="memberId != null" >
+        member_id,
+      </if>
+      <if test="position != null" >
+        position,
+      </if>
+      <if test="topic != null" >
+        topic,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="meetingId != null" >
+        #{meetingId,jdbcType=BIGINT},
+      </if>
+      <if test="memberId != null" >
+        #{memberId,jdbcType=BIGINT},
+      </if>
+      <if test="position != null" >
+        #{position,jdbcType=VARCHAR},
+      </if>
+      <if test="topic != null" >
+        #{topic,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bird.entity.MemberMeetingPosition" >
+    update bird_member_meeting_position
+    <set >
+      <if test="meetingId != null" >
+        meeting_id = #{meetingId,jdbcType=BIGINT},
+      </if>
+      <if test="memberId != null" >
+        member_id = #{memberId,jdbcType=BIGINT},
+      </if>
+      <if test="position != null" >
+        position = #{position,jdbcType=VARCHAR},
+      </if>
+      <if test="topic != null" >
+        topic = #{topic,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bird.entity.MemberMeetingPosition" >
+    update bird_member_meeting_position
+    set meeting_id = #{meetingId,jdbcType=BIGINT},
+      member_id = #{memberId,jdbcType=BIGINT},
+      position = #{position,jdbcType=VARCHAR},
+      topic = #{topic,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
