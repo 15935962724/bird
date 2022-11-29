@@ -17,7 +17,7 @@ public class MyLocaleResolver implements LocaleResolver {
         String l = request.getParameter("l"  );
         System.err.println(">>>>>>>>>>>>>>>>>"+l);
         Locale locale = Locale.getDefault();
-        if (!StringUtils.isEmpty(l)){
+        if (null!=l){
                 String [] split = l.split("_");
                return new Locale(split[0],split[1] );
         }

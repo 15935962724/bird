@@ -1,5 +1,4 @@
 $().ready(function() {
-
   var $listForm = $("#list");
   var $pageNum = $("#pageNum");
   var $pageSize = $("#pageSize");
@@ -11,6 +10,7 @@ $().ready(function() {
 
   // 上一页，下一页
   $.pageSkip = function(pageNumber) {
+    console.log(pageNumber);
       $pageNum.val(pageNumber);
       $listForm.submit();
       return false;

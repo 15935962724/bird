@@ -94,6 +94,11 @@ public class MemberMeetingPositionController {
 	}
 
 
+	@RequestMapping("/delete")
+	public String delete(Model model,Long id) {
+		memberMeetingPositionService.deleteByPrimaryKey(id);
+		return  "redirect:list";
+	}
 
 
 }

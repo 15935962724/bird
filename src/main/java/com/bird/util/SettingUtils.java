@@ -127,13 +127,13 @@ public final class SettingUtils {
 	 * @return 系统设置
 	 */
 	public static Setting get() {
-		Subject subject = SecurityUtils.getSubject();
-		Setting setting= (Setting) subject.getSession().getAttribute("setting");
-//		Ehcache cache = cacheManager.getEhcache(Setting.CACHE_NAME);
-//		net.sf.ehcache.Element cacheElement = cache.get(Setting.CACHE_KEY);
+//		Subject subject = SecurityUtils.getSubject();
+//		Setting setting= (Setting) subject.getSession().getAttribute("setting");
+////		Ehcache cache = cacheManager.getEhcache(Setting.CACHE_NAME);
+////		net.sf.ehcache.Element cacheElement = cache.get(Setting.CACHE_KEY);
 
-		if (setting==null){
-			setting = new Setting();
+
+			Setting setting = new Setting();
 			try {
 				String staticPath= ClassUtils.getDefaultClassLoader().getResource("static/").getPath();
 				String path = staticPath+ "/setting.xml";
@@ -155,10 +155,8 @@ public final class SettingUtils {
 				System.out.println("解析xml文件出错:"+e.getMessage());
 				e.printStackTrace();
 			}
-			subject.getSession().setAttribute("setting",setting);
-		}
 
-		return setting;
+				return setting;
 	}
 
 	/**
@@ -219,8 +217,8 @@ public final class SettingUtils {
 				}
 				IOUtils.closeQuietly(fileOutputStream);
 			}
-			Subject subject = SecurityUtils.getSubject();
-			subject.getSession().setAttribute("setting",setting);
+//			Subject subject = SecurityUtils.getSubject();
+//			subject.getSession().setAttribute("setting",setting);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

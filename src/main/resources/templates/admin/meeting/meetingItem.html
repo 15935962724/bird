@@ -1,0 +1,91 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <title>分会场管理</title>
+    <meta name="author" content="DeathGhost" />
+    <link rel="stylesheet" type="text/css"  th:href="@{/css/style.css}">
+    <!--[if lt IE 9]>
+    <script th:src="@{/js/html5.js}"></script>
+    <![endif]-->
+    <script th:src="@{/js/jquery.js}"></script>
+    <script th:src="@{/js/jquery.mCustomScrollbar.concat.min.js}"></script>
+    <script th:src="@{/js/load-content.js}"></script>
+    <script th:src="@{/js/list.js}"></script>
+</head>
+<body>
+<!--header-->
+<div th:replace="~{admin/incloud/top::content}"></div>
+<!--aside nav-->
+<!--aside nav-->
+<div th:replace="~{admin/incloud/left::content}"></div>
+
+<section class="rt_wrap content mCustomScrollbar">
+    <div class="rt_content">
+        <div class="page_title">
+            <h2 class="fl">分会场列表示例</h2>
+            <a onclick="addDom()" class="fr top_rt_btn add_icon">添加会议分会场</a>
+        </div>
+        <form id="list" th:action="@{/admin/meeting/meetingItem}">
+            <table class="table" id="table">
+                <tr>
+                    <th>分会场</th>
+                    <th>操作</th>
+                </tr>
+                <tr >
+                    <td class="center">签到日</td>
+                    <td class="center">
+                        <a title="日程安排" ><img style="width: 18px;height: 18px;position: relative;top: -4px;" th:src="@{/images/rili.png}"/></a>
+                        <a title="编辑" class="link_icon">&#101;</a>
+                        <a title="删除" class="link_icon" onclick="deleteHy(this)">&#100;</a>
+                    </td>
+                </tr>
+            </table>
+        </form>
+
+    </div>
+</section>
+</body>
+
+<script th:inline="javascript">
+    console.log($)
+    function deleteHy(_this){
+        var open = confirm('你确定要删除吗？');
+
+        if(open){
+            $.ajax({
+                url: [[@{/admin/meeting/delete}]],
+                dataType: "json",
+                    type: "POST",
+                    contentType: "application/json",
+                    data: JSON.stringify({id:$(_this).attr('id')}),
+                    success: function(retInfo) {
+                    if(retInfo.status != 200){
+                        alert('操作失败!');
+                    }else {
+                        location.reload();
+                    }
+                }
+            });
+        }
+    }
+
+
+    function addDom() {
+        var value = prompt('请输入分会场名称：','');
+        if (value == null) {
+            // alert('你取消了输入！');
+        } else if (value == '') {
+            alert('请输入分会场');
+            addDom();
+        } else {
+            var html = '<tr ><td class="center">'+value+'</td><td class="center"><a title="日程安排" ><img style="width: 18px;height: 18px;position: relative;top: -4px;" src="/images/rili.png"/></a><a title="编辑" class="link_icon">&#101;</a><a title="删除" class="link_icon" onclick="deleteHy(this)">&#100;</a></tr>';
+            $("#table").append(html)
+        }
+
+
+    }
+
+
+</script>
+</html>

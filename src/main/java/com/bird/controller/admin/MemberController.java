@@ -1,12 +1,14 @@
 package com.bird.controller.admin;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.bird.entity.Area;
 import com.bird.entity.Member;
 import com.bird.service.AdminService;
 import com.bird.service.AreaService;
 import com.bird.service.MemberService;
 import com.bird.util.FileUtils;
+import com.bird.util.ResultUtil;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -18,8 +20,10 @@ import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Date;
@@ -49,11 +53,12 @@ public class MemberController {
 	 * @return
 	 */
 	@RequestMapping("/list")
-	public String list(Model model,@RequestParam(defaultValue = "1") Integer pageNum, @RequestParam(defaultValue = "6") Integer pageSize,
-					   String name,String phone) {
+	public String list(Model model,@RequestParam(defaultValue = "1") Integer pageNum, @RequestParam(defaultValue = "10") Integer pageSize,
+					   String name,String phone,Long type) {
 		Map query_map = new HashMap();
 		query_map.put("name",name);
 		query_map.put("phone",phone);
+		query_map.put("type",type);
 		Page<Map<String, Object>> page = PageHelper.startPage(pageNum, pageSize);
 		List<Map> members = memberService.getMembers(query_map);
 		PageInfo<Map> pageInfo = new PageInfo<Map>();
@@ -65,6 +70,7 @@ public class MemberController {
 		model.addAttribute("page",pageInfo);
 		model.addAttribute("name",name);
 		model.addAttribute("phone",phone);
+		model.addAttribute("type",type);
 		return "admin/member/list";
 	}
 
@@ -92,6 +98,7 @@ public class MemberController {
 			member.setCreateDate(new Date());
 			member.setLogo(logo);
 			member.setType(2L);
+			member.setIsPayment(false);
 			memberService.insertSelective(member);
 			return  "redirect:list";
 	}
@@ -107,7 +114,7 @@ public class MemberController {
     public String edit(Model model,Long id) {
         Member member = memberService.selectByPrimaryKey(id);
         String tree_path = ",";
-        if (member.getAreaId()!=null){
+        if (member.getAreaId()!=null&&member.getAreaId()!=""){
             Area area = areaService.selectByPrimaryKey(Long.valueOf(member.getAreaId()));
             tree_path = area.getTreePath();
         }
@@ -152,6 +159,17 @@ public class MemberController {
 		memberService.updateByPrimaryKeySelective(member);
 		return  "redirect:list";
 	}
+
+
+	@RequestMapping("/updatePayment")
+	@ResponseBody
+	public String updatePayment(@RequestBody String params ){
+		JSONObject jsonObject = JSONObject.parseObject(params);
+		Member member = JSONObject.parseObject(params,Member.class);
+		int i = memberService.updateByPrimaryKeySelective(member);
+		return i>0? ResultUtil.success() :ResultUtil.error("操作失败!");
+	}
+
 
 
 

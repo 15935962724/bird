@@ -31,6 +31,12 @@ public class Member {
 
     private String password;
 
+    private String hospital;
+
+    private String department;
+
+    private Boolean isPayment;
+
     public Long getId() {
         return id;
     }
@@ -141,5 +147,29 @@ public class Member {
 
     public void setPassword(String password) {
         this.password = password == null ? null : password.trim();
+    }
+
+    public String getHospital() {
+        return hospital;
+    }
+
+    public void setHospital(String hospital) {
+        this.hospital = hospital == null ? null : hospital.trim();
+    }
+
+    public String getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(String department) {
+        this.department = department == null ? null : department.trim();
+    }
+
+    public Boolean getIsPayment() {
+        return isPayment;
+    }
+
+    public void setIsPayment(Boolean isPayment) {
+        this.isPayment = isPayment;
     }
 }

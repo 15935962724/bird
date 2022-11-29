@@ -3,6 +3,7 @@ package com.bird.util;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.bird.util.HttpUtil;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -21,9 +22,9 @@ import java.util.UUID;
  * @version 1.0
  */
 public final class WeiXinUtils {
-	
+
 	private String code;
-	
+
 	public String getCode() {
 		return code;
 	}
@@ -37,25 +38,24 @@ public final class WeiXinUtils {
 	 * @return
 	 */
 	public static String getAccess_token(JSONObject jsonObjects) {
-	       String url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid="+ jsonObjects.getString("appId")+"&secret=" + jsonObjects.getString("secret") ;
-	       JSONObject jsonobject = JSON.parseObject(HttpUtil.getInvoke(url));
-	       String jsontoken = jsonobject.getString("access_token");
-	       return jsontoken;
-	 }
-
+		String url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=" + jsonObjects.getString("appId") + "&secret=" + jsonObjects.getString("secret");
+		JSONObject jsonobject = JSON.parseObject(HttpUtil.getInvoke(url));
+		String jsontoken = jsonobject.getString("access_token");
+		return jsontoken;
+	}
 	/**
 	 * 长链接转成短链接 提高扫码速度和成功率
 	 * @param
 	 * @return
 	 */
-    public static String shortURL( JSONObject jsonObjects ) {
-        String requestUrl = "https://api.weixin.qq.com/cgi-bin/shorturl?access_token=ACCESS_TOKEN";
-        requestUrl = requestUrl.replace("ACCESS_TOKEN",getAccess_token(jsonObjects));
-        String jsonMsg = "{\"action\":\"long2short\",\"long_url\":\"%s\"}";
-        String.format(jsonMsg, jsonObjects.getString("longURL"));
-        JSONObject jsonobject = JSON.parseObject(HttpUtil.post(requestUrl, String.format(jsonMsg, jsonObjects.getString("longURL"))));
-        return jsonobject.getString("short_url");
-    }
+	public static String shortURL( JSONObject jsonObjects ) {
+		String requestUrl = "https://api.weixin.qq.com/cgi-bin/shorturl?access_token=ACCESS_TOKEN";
+		requestUrl = requestUrl.replace("ACCESS_TOKEN",getAccess_token(jsonObjects));
+		String jsonMsg = "{\"action\":\"long2short\",\"long_url\":\"%s\"}";
+		String.format(jsonMsg, jsonObjects.getString("longURL"));
+		JSONObject jsonobject = JSON.parseObject(HttpUtil.post(requestUrl, String.format(jsonMsg, jsonObjects.getString("longURL"))));
+		return jsonobject.getString("short_url");
+	}
 
 
 	/**
@@ -77,6 +77,7 @@ public final class WeiXinUtils {
 	 * @return
 	 */
 	public String getOpenid(JSONObject jsonObject){
+//		JSONObject jsontoken = JSON.parseObject(getAccessTokenJson(jsonObject));
 		JSONObject jsontoken = JSON.parseObject(getAccessTokenJson(jsonObject));
 		return jsontoken.getString("openid");
 	}
@@ -98,7 +99,7 @@ public final class WeiXinUtils {
 			e.printStackTrace();
 			return null;
 		}
-		
+
 	}
 
 
@@ -147,9 +148,9 @@ public final class WeiXinUtils {
 		String signature = "";
 		// 拼接字符串
 		String string1 = "jsapi_ticket=" + jsapi_ticket +
-						  "&noncestr="+ nonce_str +
-						  "&timestamp=" + timestamp +
-				          "&url=" + jsonObject.getString("url");
+				"&noncestr="+ nonce_str +
+				"&timestamp=" + timestamp +
+				"&url=" + jsonObject.getString("url");
 		System.out.println("string1:"+string1);
 		try {
 			MessageDigest crypt = MessageDigest.getInstance("SHA-1");
@@ -159,10 +160,10 @@ public final class WeiXinUtils {
 			signature = HttpUtil.byteToHex(crypt.digest());
 			System.out.println("访问地址:" + jsonObject.getString("url") +"  时间:" + sdf.format(new Date()));
 		} catch (NoSuchAlgorithmException e) {
-            System.out.println("NoSuchAlgorithmException:"+e.getMessage());
-		    e.printStackTrace();
+			System.out.println("NoSuchAlgorithmException:"+e.getMessage());
+			e.printStackTrace();
 		} catch (UnsupportedEncodingException e) {
-            System.out.println("UnsupportedEncodingException:"+e.getMessage());
+			System.out.println("UnsupportedEncodingException:"+e.getMessage());
 			e.printStackTrace();
 		}
 		wxMap.put("nonceStr", nonce_str);
@@ -171,5 +172,10 @@ public final class WeiXinUtils {
 		wxMap.put("appId", jsonObject.getString("appId"));
 		return wxMap;
 	}
-	
+
+
+
+
+
+
 }

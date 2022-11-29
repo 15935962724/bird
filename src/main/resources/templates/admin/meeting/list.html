@@ -47,7 +47,7 @@
                     <td class="center">[[${meeting.hold_address}]]</td>
                     <td class="center">[[${meeting.remarks}]]</td>
                     <td class="center">
-                        <a title="日程安排" th:href="@{/admin/schedule/edit(id=${meeting.id})}"><img style="width: 18px;height: 18px;position: relative;top: -4px;" th:src="@{/images/rili.png}"/></a>
+                        <a title="分会场" th:href="@{/admin/meetingItem/list(meetingId=${meeting.id})}"><img style="width: 18px;height: 18px;position: relative;top: -4px;" th:src="@{/images/rili.png}"/></a>
                         <a th:href="@{/admin/meeting/edit(id=${meeting.id})}" title="编辑" class="link_icon">&#101;</a>
                         <a th:id="${meeting.id}" title="删除" class="link_icon" onclick="deleteHy(this)">&#100;</a>
                     </td>

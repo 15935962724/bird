@@ -3,14 +3,14 @@
 <mapper namespace="com.bird.dao.ScheduleMapper" >
   <resultMap id="BaseResultMap" type="com.bird.entity.Schedule" >
     <id column="id" property="id" jdbcType="BIGINT" />
-    <result column="meeting_id" property="meetingId" jdbcType="BIGINT" />
+    <result column="meeting_item_id" property="meetingItemId" jdbcType="BIGINT" />
     <result column="start_date" property="startDate" jdbcType="TIMESTAMP" />
     <result column="end_date" property="endDate" jdbcType="TIMESTAMP" />
     <result column="content" property="content" jdbcType="VARCHAR" />
     <result column="type" property="type" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, meeting_id, start_date, end_date, content, type
+    id, meeting_item_id, start_date, end_date, content, type
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
@@ -18,23 +18,22 @@
     from bird_schedule
     where id = #{id,jdbcType=BIGINT}
   </select>
-    <select id="getSchedules" resultType="java.util.Map">
-      select
-      <include refid="Base_Column_List" />
-      from bird_schedule where 1 = 1
-      <if test="meetingId != null">
-        and meeting_id = #{meetingId}
-      </if>
-    </select>
-    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+  <select id="getSchedules" resultType="java.util.Map">
+    SELECT * FROM `bird_schedule` S LEFT JOIN bird_meeting_item MI ON S.`meeting_item_id` = MI.`id`
+    where 1 = 1
+    <if test="meetingItemId != null" >
+     and meeting_item_id = #{meetingItemId}
+    </if>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from bird_schedule
     where id = #{id,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.bird.entity.Schedule" >
-    insert into bird_schedule (id, meeting_id, start_date, 
+    insert into bird_schedule (id, meeting_item_id, start_date, 
       end_date, content, type
       )
-    values (#{id,jdbcType=BIGINT}, #{meetingId,jdbcType=BIGINT}, #{startDate,jdbcType=TIMESTAMP}, 
+    values (#{id,jdbcType=BIGINT}, #{meetingItemId,jdbcType=BIGINT}, #{startDate,jdbcType=TIMESTAMP}, 
       #{endDate,jdbcType=TIMESTAMP}, #{content,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}
       )
   </insert>
@@ -44,8 +43,8 @@
       <if test="id != null" >
         id,
       </if>
-      <if test="meetingId != null" >
-        meeting_id,
+      <if test="meetingItemId != null" >
+        meeting_item_id,
       </if>
       <if test="startDate != null" >
         start_date,
@@ -64,8 +63,8 @@
       <if test="id != null" >
         #{id,jdbcType=BIGINT},
       </if>
-      <if test="meetingId != null" >
-        #{meetingId,jdbcType=BIGINT},
+      <if test="meetingItemId != null" >
+        #{meetingItemId,jdbcType=BIGINT},
       </if>
       <if test="startDate != null" >
         #{startDate,jdbcType=TIMESTAMP},
@@ -84,8 +83,8 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.bird.entity.Schedule" >
     update bird_schedule
     <set >
-      <if test="meetingId != null" >
-        meeting_id = #{meetingId,jdbcType=BIGINT},
+      <if test="meetingItemId != null" >
+        meeting_item_id = #{meetingItemId,jdbcType=BIGINT},
       </if>
       <if test="startDate != null" >
         start_date = #{startDate,jdbcType=TIMESTAMP},
@@ -104,7 +103,7 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.bird.entity.Schedule" >
     update bird_schedule
-    set meeting_id = #{meetingId,jdbcType=BIGINT},
+    set meeting_item_id = #{meetingItemId,jdbcType=BIGINT},
       start_date = #{startDate,jdbcType=TIMESTAMP},
       end_date = #{endDate,jdbcType=TIMESTAMP},
       content = #{content,jdbcType=VARCHAR},

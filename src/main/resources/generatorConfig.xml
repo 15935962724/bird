@@ -64,20 +64,7 @@
             targetPackage="com.bird.dao" targetProject="src/main/java">
             <property name="enableSubPackages" value="true" />
         </javaClientGenerator>
-
-        <table tableName="bird_organizational" domainObjectName="Organizational"
-               enableCountByExample="false" enableSelectByExample="false"
-               enableUpdateByExample="false" enableDeleteByExample="false">
-        </table>
-        <table tableName="bird_attract" domainObjectName="Attract"
-               enableCountByExample="false" enableSelectByExample="false"
-               enableUpdateByExample="false" enableDeleteByExample="false">
-        </table>
-        <table tableName="bird_traffic" domainObjectName="Traffic"
-               enableCountByExample="false" enableSelectByExample="false"
-               enableUpdateByExample="false" enableDeleteByExample="false">
-        </table>
-        <table tableName="bird_epidemic" domainObjectName="Epidemic"
+        <table tableName="bird_dept" domainObjectName="Dept"
                enableCountByExample="false" enableSelectByExample="false"
                enableUpdateByExample="false" enableDeleteByExample="false">
         </table>

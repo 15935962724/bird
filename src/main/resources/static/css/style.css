@@ -168,9 +168,10 @@ header .rt_nav li .quit_icon:before{content:"Q";}
 .table td .link_icon{font-size:24px;font-family:'adminthemesregular';color:#19a97b;}
 .table td .link_icon:hover{color:#019163;}
 .paging{margin:8px 0;overflow:hidden;text-align:right;}
-.paging a{background:#19a97b;border:1px #139667 solid;color:white;padding:5px 8px;display:inline-block;cursor:pointer;}
+.paging a{background:#19a97b;border:1px #139667 solid;color:white;padding:5px 8px;display:inline-block;cursor:pointer;margin: 0 2px}
 .paging a:hover{background:#11a274;border:1px #0e8f61 solid;}
 .paging a:active{background:#17a578;border:1px #0e8f61 solid;}
+.paging .active{background:#fff;border:1px #139667 solid;color: #139667;}
 .single_selection{color:#333;padding:6px 8px;display:inline-block;vertical-align:middle;}
 .single_selection input{margin-right:3px;vertical-align:middle;}
 .errorTips{color:red;margin:0 8px;}

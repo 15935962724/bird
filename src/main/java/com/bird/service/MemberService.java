@@ -22,5 +22,6 @@ public interface MemberService {
 
     List<Map> getMembers(Map query_map);
 
+    Member getCurrent();
 
 }

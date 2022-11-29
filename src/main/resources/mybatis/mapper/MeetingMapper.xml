@@ -9,17 +9,18 @@
     <result column="hold_date" property="holdDate" jdbcType="TIMESTAMP" />
     <result column="hold_address" property="holdAddress" jdbcType="VARCHAR" />
     <result column="remarks" property="remarks" jdbcType="VARCHAR" />
-  </resultMap>
-  <resultMap id="ResultMapWithBLOBs" type="com.bird.entity.Meeting" extends="BaseResultMap" >
     <result column="welcome_speech" property="welcomeSpeech" jdbcType="LONGVARCHAR" />
+    <result column="register_agreement" property="registerAgreement" jdbcType="LONGVARCHAR" />
+    <result column="assembly" property="assembly" jdbcType="LONGVARCHAR" />
+    <result column="contribution" property="contribution" jdbcType="LONGVARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
     id, create_date, title, logo, hold_date, hold_address, remarks
   </sql>
   <sql id="Blob_Column_List" >
-    welcome_speech
+    welcome_speech, register_agreement, assembly, contribution
   </sql>
-  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select
     <include refid="Base_Column_List" />
     ,
@@ -43,10 +44,12 @@
   <insert id="insert" parameterType="com.bird.entity.Meeting" >
     insert into bird_meeting (id, create_date, title,
       logo, hold_date, hold_address,
-      remarks, welcome_speech)
+      remarks, welcome_speech, register_agreement,
+      assembly, contribution)
     values (#{id,jdbcType=BIGINT}, #{createDate,jdbcType=TIMESTAMP}, #{title,jdbcType=VARCHAR},
       #{logo,jdbcType=VARCHAR}, #{holdDate,jdbcType=TIMESTAMP}, #{holdAddress,jdbcType=VARCHAR},
-      #{remarks,jdbcType=VARCHAR}, #{welcomeSpeech,jdbcType=LONGVARCHAR})
+      #{remarks,jdbcType=VARCHAR}, #{welcomeSpeech,jdbcType=LONGVARCHAR}, #{registerAgreement,jdbcType=LONGVARCHAR},
+      #{assembly,jdbcType=LONGVARCHAR}, #{contribution,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.bird.entity.Meeting" useGeneratedKeys="true" keyProperty="id">
     insert into bird_meeting
@@ -75,6 +78,15 @@
       <if test="welcomeSpeech != null" >
         welcome_speech,
       </if>
+      <if test="registerAgreement != null" >
+        register_agreement,
+      </if>
+      <if test="assembly != null" >
+        assembly,
+      </if>
+      <if test="contribution != null" >
+        contribution,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -100,6 +112,15 @@
       </if>
       <if test="welcomeSpeech != null" >
         #{welcomeSpeech,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="registerAgreement != null" >
+        #{registerAgreement,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="assembly != null" >
+        #{assembly,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="contribution != null" >
+        #{contribution,jdbcType=LONGVARCHAR},
       </if>
     </trim>
   </insert>
@@ -127,6 +148,15 @@
       <if test="welcomeSpeech != null" >
         welcome_speech = #{welcomeSpeech,jdbcType=LONGVARCHAR},
       </if>
+      <if test="registerAgreement != null" >
+        register_agreement = #{registerAgreement,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="assembly != null" >
+        assembly = #{assembly,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="contribution != null" >
+        contribution = #{contribution,jdbcType=LONGVARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
@@ -138,7 +168,10 @@
       hold_date = #{holdDate,jdbcType=TIMESTAMP},
       hold_address = #{holdAddress,jdbcType=VARCHAR},
       remarks = #{remarks,jdbcType=VARCHAR},
-      welcome_speech = #{welcomeSpeech,jdbcType=LONGVARCHAR}
+      welcome_speech = #{welcomeSpeech,jdbcType=LONGVARCHAR},
+      register_agreement = #{registerAgreement,jdbcType=LONGVARCHAR},
+      assembly = #{assembly,jdbcType=LONGVARCHAR},
+      contribution = #{contribution,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.bird.entity.Meeting" >

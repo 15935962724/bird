@@ -16,10 +16,13 @@
     <result column="nick_name" property="nickName" jdbcType="VARCHAR" />
     <result column="wx_logo" property="wxLogo" jdbcType="VARCHAR" />
     <result column="password" property="password" jdbcType="VARCHAR" />
+    <result column="hospital" property="hospital" jdbcType="VARCHAR" />
+    <result column="department" property="department" jdbcType="VARCHAR" />
+    <result column="is_payment" property="isPayment" jdbcType="BIT" />
   </resultMap>
   <sql id="Base_Column_List" >
     id, create_date, name, logo, position, phone, email, area_id, address, open_id, type,
-    nick_name, wx_logo, password
+    nick_name, wx_logo, password, hospital, department, is_payment
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select
@@ -38,6 +41,9 @@
     <if test="phone!=null and phone !=''">
       and phone like '%${phone}%'
     </if>
+    <if test="type!=null and type !=''">
+      and type = #{type}
+    </if>
   </select>
   <select id="getMember" resultType="com.bird.entity.Member" parameterType="java.util.HashMap">
     select
@@ -45,7 +51,7 @@
     from bird_member
     where 1 = 1
     <if test="openId!=null and openId !=''">
-      and open_id = ${openId}
+      and open_id = #{openId}
     </if>
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
@@ -57,12 +63,14 @@
       logo, position, phone,
       email, area_id, address,
       open_id, type, nick_name,
-      wx_logo, password)
+      wx_logo, password, hospital,
+      department, is_payment)
     values (#{id,jdbcType=BIGINT}, #{createDate,jdbcType=TIMESTAMP}, #{name,jdbcType=VARCHAR},
       #{logo,jdbcType=VARCHAR}, #{position,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR},
       #{email,jdbcType=VARCHAR}, #{areaId,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR},
       #{openId,jdbcType=VARCHAR}, #{type,jdbcType=BIGINT}, #{nickName,jdbcType=VARCHAR},
-      #{wxLogo,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR})
+      #{wxLogo,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{hospital,jdbcType=VARCHAR},
+      #{department,jdbcType=VARCHAR}, #{isPayment,jdbcType=BIT})
   </insert>
   <insert id="insertSelective" parameterType="com.bird.entity.Member" useGeneratedKeys="true" keyProperty="id" >
     insert into bird_member
@@ -109,6 +117,15 @@
       <if test="password != null" >
         password,
       </if>
+      <if test="hospital != null" >
+        hospital,
+      </if>
+      <if test="department != null" >
+        department,
+      </if>
+      <if test="isPayment != null" >
+        is_payment,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -152,6 +169,15 @@
       </if>
       <if test="password != null" >
         #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="hospital != null" >
+        #{hospital,jdbcType=VARCHAR},
+      </if>
+      <if test="department != null" >
+        #{department,jdbcType=VARCHAR},
+      </if>
+      <if test="isPayment != null" >
+        #{isPayment,jdbcType=BIT},
       </if>
     </trim>
   </insert>
@@ -197,6 +223,15 @@
       <if test="password != null" >
         password = #{password,jdbcType=VARCHAR},
       </if>
+      <if test="hospital != null" >
+        hospital = #{hospital,jdbcType=VARCHAR},
+      </if>
+      <if test="department != null" >
+        department = #{department,jdbcType=VARCHAR},
+      </if>
+      <if test="isPayment != null" >
+        is_payment = #{isPayment,jdbcType=BIT},
+      </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
@@ -214,7 +249,10 @@
       type = #{type,jdbcType=BIGINT},
       nick_name = #{nickName,jdbcType=VARCHAR},
       wx_logo = #{wxLogo,jdbcType=VARCHAR},
-      password = #{password,jdbcType=VARCHAR}
+      password = #{password,jdbcType=VARCHAR},
+      hospital = #{hospital,jdbcType=VARCHAR},
+      department = #{department,jdbcType=VARCHAR},
+      is_payment = #{isPayment,jdbcType=BIT}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

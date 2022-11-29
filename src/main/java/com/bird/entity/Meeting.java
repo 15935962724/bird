@@ -19,6 +19,44 @@ public class Meeting {
 
     private String welcomeSpeech;
 
+    private String registerAgreement;
+
+    private String assembly;
+
+    private String contribution;
+
+    public String getWelcomeSpeech() {
+        return welcomeSpeech;
+    }
+
+    public void setWelcomeSpeech(String welcomeSpeech) {
+        this.welcomeSpeech = welcomeSpeech == null ? null : welcomeSpeech.trim();
+    }
+
+    public String getRegisterAgreement() {
+        return registerAgreement;
+    }
+
+    public void setRegisterAgreement(String registerAgreement) {
+        this.registerAgreement = registerAgreement == null ? null : registerAgreement.trim();
+    }
+
+    public String getAssembly() {
+        return assembly;
+    }
+
+    public void setAssembly(String assembly) {
+        this.assembly = assembly == null ? null : assembly.trim();
+    }
+
+    public String getContribution() {
+        return contribution;
+    }
+
+    public void setContribution(String contribution) {
+        this.contribution = contribution == null ? null : contribution.trim();
+    }
+
     public Long getId() {
         return id;
     }
@@ -73,13 +111,5 @@ public class Meeting {
 
     public void setRemarks(String remarks) {
         this.remarks = remarks == null ? null : remarks.trim();
-    }
-
-    public String getWelcomeSpeech() {
-        return welcomeSpeech;
-    }
-
-    public void setWelcomeSpeech(String welcomeSpeech) {
-        this.welcomeSpeech = welcomeSpeech == null ? null : welcomeSpeech.trim();
     }
 }

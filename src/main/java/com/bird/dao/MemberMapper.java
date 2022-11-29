@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 public interface MemberMapper {
+
     int deleteByPrimaryKey(Long id);
 
     int insert(Member record);

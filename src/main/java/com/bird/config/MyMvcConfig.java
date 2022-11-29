@@ -1,7 +1,12 @@
 package com.bird.config;
 
+import com.alibaba.fastjson.JSONObject;
 import com.bird.interceptor.AdminInterceptor;
 import com.bird.interceptor.MemberInterceptor;
+import com.bird.util.Setting;
+import com.bird.util.SettingUtils;
+import com.bird.util.WeiXinUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
@@ -20,6 +25,13 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 @Configuration
 public class MyMvcConfig extends WebMvcConfigurerAdapter {
 
+
+	@Value("${wxAppid}")
+	private String wxAppId;
+
+	@Value("${wxSecret}")
+	private String wxSecret;
+
 //	@Override
 //	public void addViewControllers(ViewControllerRegistry registry) {
 //		// TODO Auto-generated method stub
@@ -31,7 +43,17 @@ public class MyMvcConfig extends WebMvcConfigurerAdapter {
 	@Override
 	 public void addInterceptors(InterceptorRegistry registry) {
 		 registry.addInterceptor(new AdminInterceptor()).addPathPatterns("/admin/**");
+
+
 		 System.out.println(">>>>>>>>>>>>>>>开始配置拦截器");
+		JSONObject wx = new JSONObject();
+		wx.put("appId",wxAppId);
+		wx.put("secret",wxSecret);
+		String access_token = WeiXinUtils.getAccess_token(wx);
+		System.out.println("获取accessToken:"+access_token);
+		 Setting setting = SettingUtils.get();
+		setting.setAccessToken(access_token);
+		SettingUtils.set(setting);
 		 registry.addInterceptor(new MemberInterceptor()).addPathPatterns("/member/**");
 		 super.addInterceptors(registry);
 	}

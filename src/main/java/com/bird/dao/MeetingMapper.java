@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 public interface MeetingMapper {
+
     int deleteByPrimaryKey(Long id);
 
     int insert(Meeting record);
@@ -21,4 +22,5 @@ public interface MeetingMapper {
     int updateByPrimaryKey(Meeting record);
 
     List<Map> getMeetings(Map query_map);
+
 }

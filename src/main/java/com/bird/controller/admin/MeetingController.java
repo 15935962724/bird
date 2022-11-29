@@ -100,6 +100,17 @@ public class MeetingController {
 	}
 
 	/**
+	 * 分会场
+	 * @return
+	 */
+	@RequestMapping("/meetingItem")
+	public String meetingItem(Model model) {
+		return "admin/meeting/meetingItem";
+	}
+
+
+
+	/**
 	 * 添加会议页面
 	 * @param model
 	 * @return

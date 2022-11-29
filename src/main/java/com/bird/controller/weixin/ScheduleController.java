@@ -40,7 +40,7 @@ public class ScheduleController {
 	public String list(@RequestBody JSONObject jsonObject){
 		JSONObject return_data = new JSONObject();
 		Map query_map = new HashMap();
-		query_map.put("meetingId",meetingId);
+		query_map.put("meetingItemId",jsonObject.getLong("meetingItemId"));
 		List<Map> schedules = scheduleService.getSchedules(query_map);
 		return_data.put("schedules",schedules);
 		return  ResultUtil.success(return_data);

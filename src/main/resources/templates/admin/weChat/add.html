@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+ <meta charset="utf-8"/>
+ <title>微信菜单</title>
+ <meta name="author" content="DeathGhost" />
+ <link rel="stylesheet" type="text/css"  th:href="@{/css/style.css}">
+ <!--[if lt IE 9]>
+ <script th:src="@{/js/html5.js}"></script>
+ <![endif]-->
+ <script th:src="@{/js/jquery.js}"></script>
+ <script th:src="@{/js/jquery.mCustomScrollbar.concat.min.js}"></script>
+ <script th:src="@{/js/load-content.js}"></script>
+ <script th:src="@{/js/lSelect.js}"></script>
+ <script th:src="@{/laydate/laydate.js}"></script>
+<style>
+ .deleteItem{
+  position: relative;
+ }
+ .deleteItem span{
+  position: absolute;
+  right: 5px;
+  top: 2px;
+  color: #fff;
+  font-size: 28px;
+  cursor: pointer;
+  z-index: 5;
+ }
+</style>
+</head>
+<body>
+<!--header-->
+<!--头部-->
+<div th:replace="~{admin/incloud/top::content}"></div>
+<!--aside nav-->
+<!--aside nav-->
+<!--左侧-->
+<div th:replace="~{admin/incloud/left::content}"></div>
+
+<section class="rt_wrap content mCustomScrollbar">
+ <div class="rt_content">
+      <div class="page_title">
+       <h2 class="fl">添加菜单</h2>
+      </div>
+     <form th:action="@{/admin/weChat/save}" method="post">
+      <ul class="ulColumn2">
+       <li>
+        <span class="item_name" style="width:120px;">父级菜单：</span>
+        <select class="select" name="parentId">
+         <option value="0">----</option>
+         <option value="1" >行业资讯</option>
+         <option value="2" >关于我们</option>
+         <option value="3" >BIRD2021</option>
+        </select>
+       </li>
+       <li>
+        <span class="item_name" style="width:120px;">菜单名称：</span>
+        <input type="text" class="textbox textbox_225" name="name" placeholder="菜单名称..." required />
+       </li>
+       <li>
+        <span class="item_name" style="width:120px;">类型：</span>
+        <label class="single_selection"><input type="radio" name="type" value="view"/>网页</label>
+        <label class="single_selection"><input type="radio" name="type" value="click"/>事件</label>
+        <label class="single_selection"><input type="radio" name="type" value="new"/>图文</label>
+        <label class="single_selection"><input type="radio" name="type" value="miniprogram" />小程序</label>
+       </li>
+       <li>
+        <span class="item_name" style="width:120px;">内容：</span>
+        <textarea placeholder="内容" class="textarea" name="content" style="height:50px;width:640px;"></textarea>
+       </li>
+       <li>
+        <span class="item_name" style="width:120px;"></span>
+        <input type="submit" class="link_btn" value="保存"/>
+       </li>
+      </ul>
+     </form>
+
+ </div>
+</section>
+
+</body>
+</html>
+<script th:src="@{/laydate/dateUtil.js}"></script>
+<script th:src="@{/ueditor/ueditor.config.js}"></script>
+<script th:src="@{/ueditor/ueditor.all.js}"></script>
+<script th:src="@{/ueditor/lang/zh-cn/zh-cn.js}"></script>

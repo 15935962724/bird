@@ -266,13 +266,19 @@ public class HttpUtil
 //		String json = HttpUtil.postHuiDiao("https://api.miaodiyun.com/20150822/industrySMS/sendSMS",
 //				ShortMessageUtil.createCommonParam("18347653917",mobile_code));
 //		System.out.println(json);
-		String realName = "叶洪弼";
-        String card = "44023319811003003x";
-		String url="https://v.apistore.cn/api/a1";
-		String param="key=8163022b92c28d82cb3d973f3042eaf4&cardNo="+card+"&realName="+realName+"&information=";
-		String returnStr = HttpUtil.post(url, param);
-		System.out.println(returnStr);
-		
+//		String realName = "叶洪弼";
+//        String card = "44023319811003003x";
+//		String url="https://v.apistore.cn/api/a1";
+//		String param="key=8163022b92c28d82cb3d973f3042eaf4&cardNo="+card+"&realName="+realName+"&information=";
+//		String returnStr = HttpUtil.post(url, param);
+//		System.out.println(returnStr);39c409942dd0c7217a0ce1fba59e90b3
+		String url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=wx216689b717dbc269&secret=39c409942dd0c7217a0ce1fba59e90b3";
+		String token = HttpUtil.getInvoke(url);
+		System.out.println("token:"+token);
+		String uuid = UUIDUtil.getUUID();
+		System.out.println(uuid+",length:"+uuid.length());
+
+
 	}
 
 	/**

@@ -69,7 +69,7 @@ public class OrganizationalController {
 	 */
 	@RequestMapping("/edit")
 	public String edit(Model model,Long meeting_id) {
-		Organizational organizational = organizationalService.selectByPrimaryKey(meetingId);
+		Organizational organizational = organizationalService.selectByPrimaryKey(meeting_id);
 		Meeting meeting = meetingService.selectByPrimaryKey(meeting_id);
 		model.addAttribute("meeting",meeting);
 		model.addAttribute("organizational",organizational);

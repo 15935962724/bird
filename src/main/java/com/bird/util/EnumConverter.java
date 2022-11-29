@@ -73,4 +73,8 @@ public class EnumConverter extends AbstractConverter {
 		return value.toString();
 	}
 
+	@Override
+	public Object convert(Class aClass, Object o) {
+		return null;
+	}
 }

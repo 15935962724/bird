@@ -7,9 +7,12 @@ import com.bird.entity.Admin;
 import com.bird.entity.Member;
 import com.bird.service.AdminService;
 import com.bird.service.MemberService;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -60,4 +63,24 @@ public class MemberServiceImpl implements MemberService {
 	public int updateByPrimaryKey(Member record) {
 		return 0;
 	}
+
+
+	//获得登录人信息
+	@Override
+	public Member getCurrent() {
+		Member member=null;
+		Subject subject = SecurityUtils.getSubject();
+		if (subject.getPrincipal() != null) {
+			member = (Member)subject.getPrincipal();
+			return member;
+		}else{
+			Map query_map = new HashMap();
+			query_map.put("openId","oZs8_6bU77b6rHhuL88XTJ2rz9BI");
+			member = memberMapper.getMember(query_map);
+			return member;
+		}
+
+	}
+
+
 }

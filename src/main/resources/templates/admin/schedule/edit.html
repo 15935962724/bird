@@ -26,7 +26,7 @@
    text-transform: uppercase;
   }
   .fc table tbody tr{
-   height: 20px;
+   height: 80px;
   }
  </style>
 
@@ -82,7 +82,7 @@
    content: e,
    startDate: startTime,
    endDate: endTime,
-   meetingId: [[${meetingId}]]
+   meetingItemId: [[${meetingItemId}]]
   });
 
   $.ajax({
@@ -207,9 +207,9 @@
      },
      monthNamesShort: ["1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月"],
      dayNamesShort: ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"],
-     slotDuration: "00:15:00",
+     slotDuration: "00:10:00",
      minTime: "08:00:00",
-     maxTime: "19:00:00",
+     maxTime: "22:00:00",
      defaultView: "agendaWeek",
      handleWindowResize: !0,
      height: e(window).height - 200,

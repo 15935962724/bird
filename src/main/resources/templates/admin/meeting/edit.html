@@ -76,6 +76,18 @@
      <textarea id="editor" rows="20" cols="160" name="welcomeSpeech" th:utext="${meeting.welcomeSpeech}"></textarea>
     </li>
     <li>
+     <span class="item_name" style="width:120px;">注册协议：</span>
+     <textarea id="registerAgreement" rows="20" cols="160" name="registerAgreement" th:utext="${meeting.registerAgreement}"></textarea>
+    </li>
+    <li>
+     <span class="item_name" style="width:120px;">论文汇编：</span>
+     <textarea id="assembly" rows="20" cols="160" name="assembly" th:utext="${meeting.assembly}"></textarea>
+    </li>
+    <li>
+     <span class="item_name" style="width:120px;">征文投稿：</span>
+     <textarea id="contribution" rows="20" cols="160" name="contribution" th:utext="${meeting.contribution}"></textarea>
+    </li>
+    <li>
      <span class="item_name" style="width:120px;">描述：</span>
      <textarea placeholder="描述" class="textarea" name="remarks" th:text="${meeting.remarks}" style="height:50px;width:640px;"></textarea>
     </li>
@@ -101,8 +113,25 @@
 
  //实例化编辑器
  //建议使用工厂方法getEditor创建和引用编辑器实例，如果在某个闭包下引用该编辑器，直接调用UE.getEditor('editor')就能拿到相关的实例
+ //欢迎词
  var ue = UE.getEditor('editor',{initialFrameWidth:'80%',initialFrameHeight:180});
  $("#editor").css("margin-left","120px");
+
+ //注册协议
+ UE.getEditor('registerAgreement',{initialFrameWidth:'80%',initialFrameHeight:180});
+ $("#registerAgreement").css("margin-left","120px");
+
+ //论文汇编
+ UE.getEditor('assembly',{initialFrameWidth:'80%',initialFrameHeight:180});
+ $("#assembly").css("margin-left","120px");
+
+ //征文投稿
+ UE.getEditor('contribution',{initialFrameWidth:'80%',initialFrameHeight:180});
+ $("#contribution").css("margin-left","120px");
+
+
+
+
 
  var width,height,imgArray=[];//背景图宽高
 

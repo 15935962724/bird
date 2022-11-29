@@ -47,13 +47,14 @@ public class ScheduleController {
      * @return
      */
     @RequestMapping("/edit")
-    public String edit(Model model,Long id) {
+    public String edit(Model model,Long meetingItemId) {
 
-    	model.addAttribute("meetingId",id);
+    	model.addAttribute("meetingItemId",meetingItemId);
     	Map query_map = new HashMap();
-    	query_map.put("meetingId",id);
+    	query_map.put("meetingItemId",meetingItemId);
 		List<Map> schedules = scheduleService.getSchedules(query_map);
 		model.addAttribute("schedules",schedules);
+		model.addAttribute("meetingItemId",meetingItemId);
 		return "admin/schedule/edit";
     }
 

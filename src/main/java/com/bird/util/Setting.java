@@ -21,33 +21,6 @@ public class Setting implements Serializable {
 	/** 分隔符 */
 	private static final String SEPARATOR = ",";
 
-//	/** 网站名称 */
-//	private String siteName;
-//
-//	/** 网站网址 */
-//	private String siteUrl;
-//
-//	/** logo */
-//	private String logo;
-//
-//	/** 热门搜索 */
-//	private String hotSearch;
-//
-//	/** 联系地址 */
-//	private String address;
-//
-//	/** 联系电话 */
-//	private String phone;
-//
-//	/** 邮政编码 */
-//	private String zipCode;
-//
-//	/** E-mail */
-//	private String email;
-//
-//	/** 备案编号 */
-//	private String certtext;
-
 	/*短信接口*/
 	private String shortMessageUrl;
 
@@ -60,84 +33,13 @@ public class Setting implements Serializable {
 	/*短信接口秘钥*/
 	private String authToken;
 
-
 	/*会员注册赠送积分*/
 	private String memberRegisterPoint;
 
 	/*购买软件赠送积分*/
 	private String purchaseProductPoint;
 
-//	public String getSiteName() {
-//		return siteName;
-//	}
-//
-//	public void setSiteName(String siteName) {
-//		this.siteName = siteName;
-//	}
-//
-//	public String getSiteUrl() {
-//		return siteUrl;
-//	}
-//
-//	public void setSiteUrl(String siteUrl) {
-//		this.siteUrl = siteUrl;
-//	}
-//
-//	public String getLogo() {
-//		return logo;
-//	}
-//
-//	public void setLogo(String logo) {
-//		this.logo = logo;
-//	}
-//
-//	public String getHotSearch() {
-//		return hotSearch;
-//	}
-//
-//	public void setHotSearch(String hotSearch) {
-//		this.hotSearch = hotSearch;
-//	}
-//
-//	public String getAddress() {
-//		return address;
-//	}
-//
-//	public void setAddress(String address) {
-//		this.address = address;
-//	}
-//
-//	public String getPhone() {
-//		return phone;
-//	}
-//
-//	public void setPhone(String phone) {
-//		this.phone = phone;
-//	}
-//
-//	public String getZipCode() {
-//		return zipCode;
-//	}
-//
-//	public void setZipCode(String zipCode) {
-//		this.zipCode = zipCode;
-//	}
-//
-//	public String getEmail() {
-//		return email;
-//	}
-//
-//	public void setEmail(String email) {
-//		this.email = email;
-//	}
-//
-//	public String getCerttext() {
-//		return certtext;
-//	}
-//
-//	public void setCerttext(String certtext) {
-//		this.certtext = certtext;
-//	}
+	private String accessToken;
 
 	public String getShortMessageUrl() {
 		return shortMessageUrl;
@@ -163,6 +65,14 @@ public class Setting implements Serializable {
 		this.accountId = accountId;
 	}
 
+	public String getAuthToken() {
+		return authToken;
+	}
+
+	public void setAuthToken(String authToken) {
+		this.authToken = authToken;
+	}
+
 	public String getMemberRegisterPoint() {
 		return memberRegisterPoint;
 	}
@@ -179,12 +89,11 @@ public class Setting implements Serializable {
 		this.purchaseProductPoint = purchaseProductPoint;
 	}
 
-
-	public String getAuthToken() {
-		return authToken;
+	public String getAccessToken() {
+		return accessToken;
 	}
 
-	public void setAuthToken(String authToken) {
-		this.authToken = authToken;
+	public void setAccessToken(String accessToken) {
+		this.accessToken = accessToken;
 	}
 }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<tongfu>
+<bird>
 	<!--<setting name="siteName" value="SHARE社区"/>
 	<setting name="siteUrl" value="http://www.cb365.com.cn"/>  
 	<setting name="logo" value="/share/upload/image/logo.gif"/>  
@@ -22,10 +22,8 @@
     <setting name="memberRegisterPoint" value="100"/>
     <!--购买软件赠送积分-->
     <setting name="purchaseProductPoint" value="10"/>
-	<!--   学术活动首页收费类型   -->
-	<setting name="type" value="1"/>
-	<!--学术活动首页收费价格-->
-	<setting name="price" value="0.01"/>
+	<!--Access_token-->
+	<setting name="accessToken" value="d22b144c1de959e4d3c72fbcd9df8d27"/>
 	 
 
-</tongfu>
+</bird>

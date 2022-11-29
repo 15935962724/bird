@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bird.dao.MeetingItemMapper" >
+  <resultMap id="BaseResultMap" type="com.bird.entity.MeetingItem" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="meeting_id" property="meetingId" jdbcType="BIGINT" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, meeting_id, name, remarks
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from bird_meeting_item
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="getMeetingItems" resultType="java.util.Map">
+    SELECT MI.*,M.`title` FROM `bird_meeting_item` MI LEFT JOIN bird_meeting M ON MI.`meeting_id` = M.`id`
+    where 1 = 1
+    <if test="meetingId != null" >
+      and MI.meeting_id = #{meetingId}
+    </if>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from bird_meeting_item
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.bird.entity.MeetingItem" >
+    insert into bird_meeting_item (id, meeting_id, name,
+      remarks)
+    values (#{id,jdbcType=BIGINT}, #{meetingId,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR},
+      #{remarks,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.bird.entity.MeetingItem" >
+    insert into bird_meeting_item
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="meetingId != null" >
+        meeting_id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="meetingId != null" >
+        #{meetingId,jdbcType=BIGINT},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bird.entity.MeetingItem" >
+    update bird_meeting_item
+    <set >
+      <if test="meetingId != null" >
+        meeting_id = #{meetingId,jdbcType=BIGINT},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bird.entity.MeetingItem" >
+    update bird_meeting_item
+    set meeting_id = #{meetingId,jdbcType=BIGINT},
+      name = #{name,jdbcType=VARCHAR},
+      remarks = #{remarks,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

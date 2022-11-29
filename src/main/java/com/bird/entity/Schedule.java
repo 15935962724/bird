@@ -5,7 +5,7 @@ import java.util.Date;
 public class Schedule {
     private Long id;
 
-    private Long meetingId;
+    private Long meetingItemId;
 
     private Date startDate;
 
@@ -23,12 +23,12 @@ public class Schedule {
         this.id = id;
     }
 
-    public Long getMeetingId() {
-        return meetingId;
+    public Long getMeetingItemId() {
+        return meetingItemId;
     }
 
-    public void setMeetingId(Long meetingId) {
-        this.meetingId = meetingId;
+    public void setMeetingItemId(Long meetingItemId) {
+        this.meetingItemId = meetingItemId;
     }
 
     public Date getStartDate() {

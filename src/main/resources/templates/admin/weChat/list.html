@@ -1,0 +1,110 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <title>微信菜单管理</title>
+    <meta name="author" content="DeathGhost" />
+    <link rel="stylesheet" type="text/css"  th:href="@{/css/style.css}">
+    <!--[if lt IE 9]>
+    <script th:src="@{/js/html5.js}"></script>
+    <![endif]-->
+    <script th:src="@{/js/jquery.js}"></script>
+    <script th:src="@{/js/jquery.mCustomScrollbar.concat.min.js}"></script>
+    <script th:src="@{/js/load-content.js}"></script>
+    <script th:src="@{/js/list.js}"></script>
+</head>
+<body>
+<!--header-->
+<div th:replace="~{admin/incloud/top::content}"></div>
+<!--aside nav-->
+<!--aside nav-->
+<div th:replace="~{admin/incloud/left::content}"></div>
+
+<section class="rt_wrap content mCustomScrollbar">
+    <div class="rt_content">
+        <div class="page_title">
+            <h2 class="fl">微信菜单列表(注：最多包括3个一级菜单，每个一级菜单最多包含5个二级菜单)</h2>
+            <a th:href="@{/admin/weChat/add}" class="fr top_rt_btn add_icon">添加微信菜单</a>
+        </div>
+        <!--[[${wxMenus}]]-->
+        <form id="list" th:action="@{/admin/meeting/meetingItem}">
+            <table class="table" id="table">
+                <tr>
+                    <th>菜单名称</th>
+                    <th>菜单类型</th>
+                    <th>菜单内容</th>
+                    <th>操作</th>
+                </tr>
+                <tr th:each="weChat:${list}">
+                    <td class="center">[[${weChat.name}]]</td>
+                    <td class="center">[[${weChat.type}]]</td>
+                    <td class="center"></td>
+                    <td class="center">
+                            <a th:href="@{/admin/weChat/delete}">删除</a>
+                    </td>
+                </tr>
+
+            </table>
+        </form>
+    </div>
+</section>
+</body>
+
+<script th:inline="javascript">
+    console.log($)
+    function deleteHy(_this){
+        var open = confirm('你确定要删除吗？');
+
+        if(open){
+            $.ajax({
+                url: [[@{/admin/meeting/delete}]],
+                dataType: "json",
+                    type: "POST",
+                    contentType: "application/json",
+                    data: JSON.stringify({id:$(_this).attr('id')}),
+                    success: function(retInfo) {
+                    if(retInfo.status != 200){
+                        alert('操作失败!');
+                    }else {
+                        location.reload();
+                    }
+                }
+            });
+        }
+    }
+
+
+    function addDom() {
+        var value = prompt('请输入分会场名称：','');
+        if (value == null) {
+            // alert('你取消了输入！');
+        } else if (value == '') {
+            alert('请输入分会场');
+            addDom();
+        } else {
+            var data = {meetingId: [[${meetingId}]],name :value};
+            $.ajax({
+                url: [[@{/admin/meetingItem/save}]],
+                dataType: "json",
+                type: "POST",
+                contentType: "application/json",
+                data: JSON.stringify(data),
+                success: function(retInfo) {
+                if(retInfo.status != 200){
+                    alert('操作失败!');
+                }else {
+                    location.reload();
+                }
+            }
+        });
+
+            // var html = '<tr ><td class="center">'+value+'</td><td class="center"><a title="日程安排" ><img style="width: 18px;height: 18px;position: relative;top: -4px;" src="/images/rili.png"/></a><a title="编辑" class="link_icon">&#101;</a><a title="删除" class="link_icon" onclick="deleteHy(this)">&#100;</a></tr>';
+            // $("#table").append(html)
+        }
+
+
+    }
+
+
+</script>
+</html>
